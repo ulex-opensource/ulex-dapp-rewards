@@ -1,7 +1,7 @@
 /* globals $ */
 
 import EmbarkJS from 'Embark/EmbarkJS';
-import ULEXToken from 'Embark/contracts/ULEXToken';
+import ULEXReward from 'Embark/contracts/ULEXReward';
 
 window.addEventListener('load', async () => {
   if (!window.ethereum && !window.web3) {
@@ -42,8 +42,8 @@ window.addEventListener('load', async () => {
       console.log(err); return;
     }
 
-    ULEXToken.methods.OPENING_RATE().call().then(function (value) {
-      $('#ULEXToken_OPENING_RATE').text(value);
+    ULEXReward.methods.OPENING_RATE().call().then(function (value) {
+      $('#ULEXReward_OPENING_RATE').text(value);
       console.log(value);
     });
   });

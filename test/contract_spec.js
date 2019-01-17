@@ -18,24 +18,24 @@ config({
 // Print environment info
 console.log('web3.version: ', web3.version);
 
-const ULEXToken = require('Embark/contracts/ULEXToken');
+const ULEXReward = require('Embark/contracts/ULEXReward');
 
-describe('ULEXToken', function () {
+describe('ULEXReward', function () {
   this.timeout(0);
 
   // it('should set constructor value', async function () {
-  //   let result = await ULEXToken.methods.storedData().call();
+  //   let result = await ULEXReward.methods.storedData().call();
   //   assert.strictEqual(parseInt(result, 10), 100);
   // });
 
   // it('set storage value', async function () {
-  //   await ULEXToken.methods.set(150).send();
-  //   let result = await ULEXToken.methods.get().call();
+  //   await ULEXReward.methods.set(150).send();
+  //   let result = await ULEXReward.methods.get().call();
   //   assert.strictEqual(parseInt(result, 10), 150);
   // });
 
   // it('should have account with balance', async function () {
-  //   let instance = await ULEXToken.deploy().send();
+  //   let instance = await ULEXReward.deploy().send();
 
   //   let balance = await web3.eth.getBalance(accounts[0]);
   //   console.log('Account 0 balance: ', balance);
@@ -45,7 +45,7 @@ describe('ULEXToken', function () {
   // CREATION
 
   // it('creation: contract should deploy with less than 4.7 mil gas', async function () {
-  //   let instance = await ULEXToken.new(NEUREAL_ETH_WALLET_ADDRESS, WHITELIST_PROVIDER_ADDRESS, {from: CONTRACT_CREATOR_ADDRESS, gas: deployGas, gasPrice: deployGasPrice});
+  //   let instance = await ULEXReward.new(NEUREAL_ETH_WALLET_ADDRESS, WHITELIST_PROVIDER_ADDRESS, {from: CONTRACT_CREATOR_ADDRESS, gas: deployGas, gasPrice: deployGasPrice});
 
   //   let receipt = await web3.eth.getTransactionReceipt(instance.transactionHash);
   //   console.log('Contract creation (gasUsed): ', receipt.gasUsed);
@@ -54,13 +54,13 @@ describe('ULEXToken', function () {
 
   // it('creation: sending ether with contract deployment should revert', async function () {
   //   try {
-  //     var result = await ULEXToken.new({from: CONTRACT_CREATOR_ADDRESS, value: fromETHtoWeiBN(0.00001), gas: deployGas, gasPrice: deployGasPrice});
+  //     var result = await ULEXReward.new({from: CONTRACT_CREATOR_ADDRESS, value: fromETHtoWeiBN(0.00001), gas: deployGas, gasPrice: deployGasPrice});
   //   } catch (err) { } // console.log(err.message); }
   //   assert.isUndefined(result);
   // });
 
   it('creation: test correct setting of state variables', async function () {
-    let instance = await ULEXToken.deploy().send();
+    let instance = await ULEXReward.deploy().send();
 
     let OPENING_RATE = await instance.methods.OPENING_RATE().call();
     console.log('OPENING_RATE: ', OPENING_RATE);
@@ -68,7 +68,7 @@ describe('ULEXToken', function () {
   });
 
   it('creation: test correct setting of vanity information', async function () {
-    let instance = await ULEXToken.deploy().send();
+    let instance = await ULEXReward.deploy().send();
 
     let name = await instance.methods.name().call();
     assert.strictEqual(name, 'Bubblr Token');
