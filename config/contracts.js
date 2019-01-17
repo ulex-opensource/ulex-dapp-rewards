@@ -8,14 +8,14 @@ module.exports = {
     gas: 'auto',
     contracts: {
       'SafeMath': { deploy: false },
+      'Address': { deploy: false },
       'Roles': { deploy: false },
 
       'ERC721Full': { deploy: false },
-      'ERC721Mintable': { deploy: false },
+      'ERC721MetadataMintable': { deploy: false },
       'ERC721': { deploy: false },
       'ERC721Enumerable': { deploy: false },
-      'ERC721Metadata': { deploy: false },
-      'Address': { deploy: false }
+      'ERC721Metadata': { deploy: false }
 
       // example:
       // 'ERC20': {

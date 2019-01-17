@@ -1,4 +1,4 @@
-# ulex-dapp-contributors
+# ulex-dapp-rewards
 Ulex Community NFT for rewarding contributors
 
 ## Development Requirements
