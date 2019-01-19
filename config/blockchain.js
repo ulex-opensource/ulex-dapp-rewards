@@ -23,12 +23,12 @@ module.exports = {
     maxpeers: 0, // Maximum number of network peers (network disabled if set to 0) (default: 25)
     proxy: true, // Proxy is used to present meaningful information about transactions
     targetGasLimit: 8000000, // Target gas limit sets the artificial target gas floor for the blocks to mine
-    simulatorMnemonic: 'example exile argue silk regular smile grass bomb merge arm assist farm', // Mnemonic  used by the simulator to generate a wallet
+    simulatorMnemonic: 'example exile argue silk regular smile grass bomb merge arm assist farm', // Mnemonic  used by the simulator to generate a wallet // 0xB8D851486d1C953e31A44374ACa11151D49B8bb3
     simulatorBlocktime: 0, // Specify blockTime in seconds for automatic mining. Default is 0 and no auto-mining.
     account: {
-      // numAccounts: 3, // When specified, creates accounts for use in the dapp. This option only works in the development environment, and can be used as a quick start option that bypasses the need for MetaMask in development. These accounts are unlocked and funded with the below settings.
+      numAccounts: 9, // When specified, creates accounts for use in the dapp. This option only works in the development environment, and can be used as a quick start option that bypasses the need for MetaMask in development. These accounts are unlocked and funded with the below settings.
       // password: 'config/development/password', // Password for the created accounts (as specified in the `numAccounts` setting). If `mineWhenNeeded` is enabled (and isDev is not), this password is used to create a development account controlled by the node.
-      // balance: '5 ether' // Balance to be given to the created accounts (as specified in the `numAccounts` setting)
+      balance: '100 ether' // Balance to be given to the created accounts (as specified in the `numAccounts` setting)
     }
   },
 
@@ -78,7 +78,7 @@ module.exports = {
   testnet: {
     networkType: 'rinkeby',
     account: {
-      address: '0xF0Aa93485C6373f1A9f121AD89b40592918fC48a' // When specified, uses that address instead of the default one for the network
+      // address: '0xF0Aa93485C6373f1A9f121AD89b40592918fC48a' // When specified, uses that address instead of the default one for the network
     }
   },
 
@@ -87,7 +87,7 @@ module.exports = {
   livenet: {
     networkType: 'livenet',
     account: {
-      address: '' // When specified, uses that address instead of the default one for the network
+      // address: '' // When specified, uses that address instead of the default one for the network
     }
     // syncMode: 'light',
     // rpcCorsDomain: 'http://localhost:8000',

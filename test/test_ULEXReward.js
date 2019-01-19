@@ -4,11 +4,14 @@ const assert = require('assert');
 // For documentation please see https://embark.status.im/docs/contracts_testing.html
 let accounts;
 config({
+  contracts: {
+    // 'ULEXReward': { args: [100] }
+  },
   deployment: {
     accounts: [
-      { mnemonic: 'depart spot hello jealous tip maximum renew practice flower danger enforce engine', balance: '5 ether' },
-      { mnemonic: 'success pause smile chimney plastic cousin ensure lawsuit spring rebel flat elder', balance: '2 ether' },
-      { mnemonic: 'method potato interest wrap task turn sick live swarm tell purpose fly', balance: '8 ether' }
+      { mnemonic: 'depart spot hello jealous tip maximum renew practice flower danger enforce engine', balance: '5 ether' }, // 0x6240e511aEb6Db87192d49Ff4C065FEE486C8c89
+      { mnemonic: 'success pause smile chimney plastic cousin ensure lawsuit spring rebel flat elder', balance: '2 ether' }, // 0x7d6A4C1E2bbd02310A3f03f996ac01e841Df6143
+      { mnemonic: 'method potato interest wrap task turn sick live swarm tell purpose fly', balance: '8 ether' } // 0xbFb65267ded595CAAE6377d485CEe150bc6166E4
     ]
   }
 }, (_err, web3Accounts) => {
@@ -19,7 +22,6 @@ config({
 console.log('web3.version: ', web3.version);
 
 const ULEXReward = require('Embark/contracts/ULEXReward');
-
 describe('ULEXReward', function () {
   this.timeout(0);
 
@@ -34,13 +36,18 @@ describe('ULEXReward', function () {
   //   assert.strictEqual(parseInt(result, 10), 150);
   // });
 
-  // it('should have account with balance', async function () {
-  //   let instance = await ULEXReward.deploy().send();
+  it('should have account with balance', async function () {
+    let instance = await ULEXReward.deploy({ arguments: [accounts[1], accounts[2]] }).send();
 
-  //   let balance = await web3.eth.getBalance(accounts[0]);
-  //   console.log('Account 0 balance: ', balance);
-  //   assert.ok(parseInt(balance, 10) > 0);
-  // });
+    let balance = await web3.eth.getBalance(accounts[0]);
+    console.log('Account 0 balance: ', web3.utils.fromWei(balance));
+    balance = await web3.eth.getBalance(accounts[1]);
+    console.log('Account 1 balance: ', web3.utils.fromWei(balance));
+    balance = await web3.eth.getBalance(accounts[2]);
+    console.log('Account 2 balance: ', web3.utils.fromWei(balance));
+
+    assert.ok(web3.utils.toBN(balance).gt(0));
+  });
 
   // CREATION
 

@@ -1,17 +1,63 @@
 <html>
   <head>
     <title>ULEXReward</title>
-    <link rel="stylesheet" href="css/app.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/app.css">
+    <script src="static/js/app.js"></script>
   </head>
   <body>
-    <h3>ULEXReward</h3>
-    <p>baseTokenURI: <b id="ULEXReward_baseTokenURI">test</b></p>
-    <h3>Manage</h3>
-    <p><a href="https://rinkeby.opensea.io/assets/0x7dca125b1e805dc88814aed7ccc810f677d3e1db/12">Item ID 12</a></p>
-    <p>Mint new reward</p>
-    <p><a href="https://rinkeby-api.opensea.io/api/v1/asset/<your_contract_address>/<token_id>/?force_update=true">Force Update on OpenSea</a></p>
+
+    <div id="div_deployContract" class="w3-panel w3-hide">
+      <h3>Deploy new Contract</h3>
+      <button id="button_deploy">Deploy</button>
+    </div>
+
+    <div id="div_useContract" class="w3-panel">
+      <h3>Select Contract</h3>
+      <input id="input_address" placeholder="enter contract address" />
+      <button id="button_use">Use this contract</button>
+      <div id="text_result"></div>
+    </div>
+
+    <div id="div_info" class="w3-panel">
+      <h3>ULEXReward Contract Info</h3>
+      <p>Contract Address: <b id="text_address"></b></p>
+      <p>baseTokenURI: <b id="text_baseTokenURI"></b></p>
+    </div>
+    
+    <div id="div_mintWithTokenURI" class="w3-panel">
+      <h3>Mint NFT</h3>
+      <input id="input_address" placeholder="reciepent address (address, 40 hex)" />
+      <input id="input_id" placeholder="NFT ID (12)" />
+
+      <input id="input_name" placeholder="" />
+      <input id="input_description" placeholder="" />
+      <input id="input_image" placeholder="" />
+      <input id="input_external_url" placeholder="" />
+      <input id="input_background_color" placeholder="" />
+      <input id="input_attributes" placeholder="" />
+
+      <button id="button_execute">Mint</button>
+      <div id="text_result"></div>
+    </div>
+
+    <div id="div_balanceOf" class="w3-panel">
+      <h3>Get Count of Owned NFT</h3>
+      <input id="input_address" placeholder="account address (address, 20 bytes)" />
+      <button id="button_query">Query</button>
+      <div id="text_result"></div>
+    </div>
+
+    <div id="div_tokenURI" class="w3-panel">
+      <h3>Get NFT Metadata</h3>
+      <input id="input_id" placeholder="NFT ID (uint256, 32 bytes)" />
+      <button id="button_query">Query</button>
+      <div id="text_result"></div>
+    </div>
+
+    <div class="w3-panel">
+      <h3>All Existing NFTs</h3>
+      <p><a href="https://rinkeby.opensea.io/assets/0x7dca125b1e805dc88814aed7ccc810f677d3e1db/12">Item ID 12</a></p>
+    </div>
       
   </body>
 </html>

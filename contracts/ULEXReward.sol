@@ -17,7 +17,8 @@ contract ULEXReward is ERC721Full, ERC721MetadataMintable {
     uint256 public constant OPENING_RATE = 6400;
 
     /*** State Variables ***/
-    function baseTokenURI() public view returns (string) {
+    function baseTokenURI() public pure returns (string) {
+        // TODO change to IPFS
         return "https://opensea-creatures-api.herokuapp.com/api/creature/";
     }
     
@@ -29,6 +30,9 @@ contract ULEXReward is ERC721Full, ERC721MetadataMintable {
     // To mint, call mintWithTokenURI(to, tokenId, tokenURI)
     // to read asset url, call tokenURI(tokenId)
     
+    // TODO make public facing dapp that lets people send ETH or DAI here, how to seperate public and admin?
+    // TODO look at Status plugin to see how to put public on Status on phone
+    // TODO add this in with reward amount levels that auto mint
     // /* (called whenever someone tries to send ether to this contract) */
     // function() external payable {
     //     require(msg.value != 0, ""); // Stop spamming, contract only calls, etc

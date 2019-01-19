@@ -1,10 +1,11 @@
 {
   "contracts": ["contracts/**"],
   "app": {
-    "css/app.css": ["app/css/**"],
-    "js/app.js": ["app/js/index.js"],
-    "images/": ["app/images/**"],
-    "index.html": "app/index.html"
+    "static/css/app.css": ["app/css/**"],
+    "static/js/app.js": ["app/js/index.js"],
+    "static/images/": ["app/images/**"],
+    "index.html": "app/index.html",
+    "robots.txt": "app/robots.txt"
   },
   "buildDir": "dist/",
   "config": {

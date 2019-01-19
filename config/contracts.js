@@ -54,7 +54,7 @@ module.exports = {
     // },
     versions: {
       'web3': '1.0.0-beta.37',
-      'solc': '0.4.25',
+      'solc': '0.4.25'
       // TODO 'solc': '0.5.2'
     }
   },
@@ -70,12 +70,7 @@ module.exports = {
     deployment: {
       host: 'localhost', // Host of the blockchain node
       port: 8545, // Port of the blockchain node
-      type: 'rpc', // Type of connection (ws or rpc),
-      accounts: [
-        { mnemonic: 'depart spot hello jealous tip maximum renew practice flower danger enforce engine', balance: '5 ether' },
-        { mnemonic: 'success pause smile chimney plastic cousin ensure lawsuit spring rebel flat elder', balance: '5 ether' },
-        { mnemonic: 'method potato interest wrap task turn sick live swarm tell purpose fly', balance: '5 ether' }
-      ]
+      type: 'rpc' // Type of connection (ws or rpc)
     }
   },
 
@@ -87,10 +82,13 @@ module.exports = {
   // merges with the settings in default
   // used with 'embark run testnet'
   testnet: {
+    contracts: {
+      'ULEXReward': { deploy: false }
+    },
     deployment: {
       accounts: [
         {
-          privateKey: 'b5aa22aca3722a3ede6945b61882049c57ccf31fbe374a9974fdb6344c6a49f8'
+          privateKey: 'b5aa22aca3722a3ede6945b61882049c57ccf31fbe374a9974fdb6344c6a49f8' // 0xF0Aa93485C6373f1A9f121AD89b40592918fC48a
           // addressIndex: '0', // Optional. The index to start getting the address
           // numAddresses: '2', // Optional. The number of addresses to get
           // hdpath: 'm/44\'/60\'/0\'/0/' // Optional. HD derivation path
