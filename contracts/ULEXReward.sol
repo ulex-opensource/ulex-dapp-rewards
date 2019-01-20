@@ -17,6 +17,7 @@ contract ULEXReward is ERC721Full, ERC721MetadataMintable {
     uint256 public constant OPENING_RATE = 6400;
 
     /*** State Variables ***/
+    // TODO make sure I actually need this for OpenSea
     function baseTokenURI() public pure returns (string) {
         // TODO change to IPFS
         return "https://opensea-creatures-api.herokuapp.com/api/creature/";

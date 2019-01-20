@@ -53,7 +53,8 @@ module.exports = {
     //   ]
     // },
     versions: {
-      'web3': '1.0.0-beta.37',
+      'web3': '1.0.0-beta',
+      // TODO 'web3': '1.0.0-beta.37',
       'solc': '0.4.25'
       // TODO 'solc': '0.5.2'
     }
