@@ -80,6 +80,12 @@ module.exports = {
     account: {
       // address: '0xF0Aa93485C6373f1A9f121AD89b40592918fC48a' // When specified, uses that address instead of the default one for the network
     }
+    // syncMode: 'light',
+    // rpcCorsDomain: 'http://localhost:8000',
+    // wsOrigins: 'http://localhost:8000',
+    // account: {
+    //   password: 'config/livenet/password'
+    // }
   },
 
   // merges with the settings in default
@@ -89,12 +95,6 @@ module.exports = {
     account: {
       // address: '' // When specified, uses that address instead of the default one for the network
     }
-    // syncMode: 'light',
-    // rpcCorsDomain: 'http://localhost:8000',
-    // wsOrigins: 'http://localhost:8000',
-    // account: {
-    //   password: 'config/livenet/password'
-    // }
   }
 
   // you can name an environment with specific settings and then specify with

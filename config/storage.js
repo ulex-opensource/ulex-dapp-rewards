@@ -50,7 +50,6 @@ module.exports = {
       port: 5001,
       protocol: 'https',
       getUrl: 'https://ipfs.infura.io/ipfs/'
-      // TODO try setup ipns with Cloudflare DNS to make this work at 'https://join.neureal.net/'
     },
     dappConnection: [
       {
@@ -66,6 +65,23 @@ module.exports = {
   // merges with the settings in default
   // used with 'embark run livenet'
   livenet: {
+    // TODO try setup ipns with Cloudflare DNS to make this work at 'https://domain.com/'
+    upload: {
+      provider: 'ipfs',
+      host: 'ipfs.infura.io',
+      port: 5001,
+      protocol: 'https',
+      getUrl: 'https://ipfs.infura.io/ipfs/'
+    },
+    dappConnection: [
+      {
+        provider: 'ipfs',
+        host: 'ipfs.infura.io',
+        port: 5001,
+        protocol: 'https',
+        getUrl: 'https://ipfs.infura.io/ipfs/'
+      }
+    ]
   }
 
   // you can name an environment with specific settings and then specify with

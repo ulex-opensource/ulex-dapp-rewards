@@ -87,14 +87,14 @@ module.exports = {
       'ULEXReward': { deploy: false }
     },
     deployment: {
-      accounts: [
-        {
-          privateKey: 'b5aa22aca3722a3ede6945b61882049c57ccf31fbe374a9974fdb6344c6a49f8' // 0xF0Aa93485C6373f1A9f121AD89b40592918fC48a
-          // addressIndex: '0', // Optional. The index to start getting the address
-          // numAddresses: '2', // Optional. The number of addresses to get
-          // hdpath: 'm/44\'/60\'/0\'/0/' // Optional. HD derivation path
-        }
-      ],
+      // accounts: [
+      //   {
+      //     privateKey: 'b5aa22aca3722a3ede6945b61882049c57ccf31fbe374a9974fdb6344c6a49f8' // 0xF0Aa93485C6373f1A9f121AD89b40592918fC48a
+      //     // addressIndex: '0', // Optional. The index to start getting the address
+      //     // numAddresses: '2', // Optional. The number of addresses to get
+      //     // hdpath: 'm/44\'/60\'/0\'/0/' // Optional. HD derivation path
+      //   }
+      // ],
       host: 'rinkeby.infura.io/f671218d5de443d797cc94560bde246b',
       port: false,
       protocol: 'https',
@@ -105,7 +105,16 @@ module.exports = {
   // merges with the settings in default
   // used with 'embark run livenet'
   livenet: {
-    // TODO add Ledger support
+    contracts: {
+      'ULEXReward': { deploy: false }
+    },
+    deployment: {
+      // TODO add Ledger support
+      host: 'mainnet.infura.io/f671218d5de443d797cc94560bde246b',
+      port: false,
+      protocol: 'https',
+      type: 'rpc'
+    }
   }
 
   // you can name an environment with specific settings and then specify with

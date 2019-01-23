@@ -1,4 +1,4 @@
-/* globals web3 */
+/* globals web3 fetch */
 import $ from 'jquery';
 import EmbarkJS from 'Embark/EmbarkJS';
 import ULEXReward from 'Embark/contracts/ULEXReward';
@@ -13,6 +13,23 @@ const OpenSeaLink = 'https://rinkeby.opensea.io/assets';
 //   if (inv.gt(uint256MAX)) throw new Error('web3 uint256 overflow!');
 //   return inv;
 // }
+
+// TODO figure out better gasLimit and prices
+
+async function pinIpfs (hash) {
+  // TODO pin local or personal storage as backup also
+  const call = `https://ipfs.infura.io:5001/api/v0/pin/add?arg=/ipfs/${hash}&recursive=true`;
+  // console.log(call);
+  const response = await fetch(call);
+  // console.log(response);
+  if (!response.ok) {
+    throw new Error('pinIpfs HTTP error, status = ' + response.status);
+  }
+  const json = await response.text();
+  // console.log('response.text:' + JSON.parse(json)['Pins'][0]);
+  const hashRsp = JSON.parse(json)['Pins'];
+  return (hashRsp) ? hashRsp[0] === hash : false;
+}
 
 window.addEventListener('load', async () => {
   if (!window.ethereum && !window.web3) {
@@ -101,9 +118,8 @@ window.addEventListener('load', async () => {
       // const id = inputToUint256($('#div_mint #input_id').val());
       const json = JSON.parse($('#div_mint #input_json').val());
       const hash = await EmbarkJS.Storage.saveText(JSON.stringify(json));
+      await pinIpfs(hash);
       const uri = EmbarkJS.Storage.currentStorage._getUrl + hash; // 'fs:/ipfs/','/ipfs/','ipfs/' didn't work on OpenSea
-      // TODO pin on Infura (and extra local)
-      // https://ipfs.infura.io:5001/api/v0/pin/add?arg=QmRfkxM6b9Gd8dNzkJXdNSwxCQQDTJAdCnyNXjBGnhWue3&recursive=true
       const receipt = await curContract.methods.mintWithTokenURI(owner, uri).send({ gas: 4000000 });
       const id = receipt.events['Transfer'].returnValues.tokenId;
       // $('#div_mint #text_result').text('Done, ID ' + JSON.stringify(receipt));
