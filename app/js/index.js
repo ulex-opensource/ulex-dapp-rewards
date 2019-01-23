@@ -5,14 +5,14 @@ import ULEXReward from 'Embark/contracts/ULEXReward';
 
 const OpenSeaLink = 'https://rinkeby.opensea.io/assets';
 
-const uint256MAX = web3.utils.toBN('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-function inputToUint256 (inv) {
-  const invt = +inv;
-  if (isNaN(invt) || invt % 1 !== 0) inv = web3.utils.utf8ToHex(inv);
-  inv = web3.utils.toBN(inv).abs();
-  if (inv.gt(uint256MAX)) throw new Error('web3 uint256 overflow!');
-  return inv;
-}
+// const uint256MAX = web3.utils.toBN('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
+// function inputToUint256 (inv) {
+//   const invt = +inv;
+//   if (isNaN(invt) || invt % 1 !== 0) inv = web3.utils.utf8ToHex(inv);
+//   inv = web3.utils.toBN(inv).abs();
+//   if (inv.gt(uint256MAX)) throw new Error('web3 uint256 overflow!');
+//   return inv;
+// }
 
 window.addEventListener('load', async () => {
   if (!window.ethereum && !window.web3) {
@@ -52,7 +52,6 @@ window.addEventListener('load', async () => {
 
     // ** Main
     var curContract = ULEXReward;
-    var baseTokenURI;
 
     // Get current contract address
     const urlParams = new URLSearchParams(window.location.search);
@@ -67,19 +66,17 @@ window.addEventListener('load', async () => {
       });
     } else {
       $('#div_deployContract').removeClass('w3-hide');
+      $('#span_admin').addClass('w3-hide');
+      // Deploy new contract
+      $('#div_deployContract #button_deploy').click(async function () {
+        curContract = await ULEXReward.deploy({ data: ULEXReward.options.data }).send({ gas: 6000000 });
+        window.location.search = 'contract=' + encodeURI(curContract.options.address);
+      });
+      return;
     }
-
-    // Deploy new contract
-    // TODO will this work with metamask, infura and on testnet (rinkeby)
-    $('#div_deployContract #button_deploy').click(async function () {
-      curContract = await ULEXReward.deploy({ data: ULEXReward.options.data }).send({ gas: 4000000 });
-      window.location.search = 'contract=' + encodeURI(curContract.options.address);
-    });
 
     // Contract Info
     $('#div_info #text_address').text(curContract.options.address);
-    baseTokenURI = await curContract.methods.baseTokenURI().call();
-    $('#div_info #text_baseTokenURI').text(baseTokenURI);
     web3.eth.getAccounts().then(async function (accounts) {
       $('#div_list_owner #input_address').val(accounts[1]);
       $('#div_mint #input_address').val(accounts[1]);
@@ -92,25 +89,37 @@ window.addEventListener('load', async () => {
       }
     });
 
+    $('#div_mint #input_json').val(jsonex);
     // Mint NFT
-    // TODO write attribute JSON to IPFS
     // TODO upload image and store to IPFS
-    // ping this after mint or change: https://rinkeby-api.opensea.io/api/v1/asset/<your_contract_address>/<token_id>/?force_update=true
+    // TODO seperate out the fields
+    // TODO ping this after change: https://rinkeby-api.opensea.io/api/v1/asset/<your_contract_address>/<token_id>/?force_update=true
     $('#div_mint #button_execute').click(async function () {
-      const address = $('#div_mint #input_address').val();
-      const id = inputToUint256($('#div_mint #input_id').val());
-      await curContract.methods.mintWithTokenURI(address, id, baseTokenURI + id).send({ gas: 4000000 });
-
-      $('#div_mint #text_result').text('Done, ID ' + id);
+      $('#div_mint p').remove();
+      const owner = $('#div_mint #input_address').val();
+      if (!web3.utils.isAddress(owner)) return;
+      // const id = inputToUint256($('#div_mint #input_id').val());
+      const json = JSON.parse($('#div_mint #input_json').val());
+      const hash = await EmbarkJS.Storage.saveText(JSON.stringify(json));
+      const uri = EmbarkJS.Storage.currentStorage._getUrl + hash; // 'fs:/ipfs/','/ipfs/','ipfs/' didn't work on OpenSea
+      // TODO pin on Infura (and extra local)
+      // https://ipfs.infura.io:5001/api/v0/pin/add?arg=QmRfkxM6b9Gd8dNzkJXdNSwxCQQDTJAdCnyNXjBGnhWue3&recursive=true
+      const receipt = await curContract.methods.mintWithTokenURI(owner, uri).send({ gas: 4000000 });
+      const id = receipt.events['Transfer'].returnValues.tokenId;
+      // $('#div_mint #text_result').text('Done, ID ' + JSON.stringify(receipt));
+      // $('#div_mint #text_result').text('Done, ID ' + id);
+      const item = `<p>NFT | <a href="${uri}" target="_blank">MetaData</a> | <a href="${OpenSeaLink}/${curContract.options.address}/${id}" target="_blank">OpenSea</a> | ID[${id}]</p>`;
+      $('#div_mint').append(item);
     });
 
     // Get an NFT by ID
     $('#div_list_id #button_query').click(async function () {
       $('#div_list_id p').remove();
-      const id = inputToUint256($('#div_list_id #input_id').val());
+      // const id = inputToUint256($('#div_list_id #input_id').val());
+      const id = web3.utils.toBN($('#div_list_id #input_id').val());
       const owner = await curContract.methods.ownerOf(id).call();
       const uri = await curContract.methods.tokenURI(id).call();
-      const item = `<p>NFT | <a href="${uri}" target="_blank">MetaData</a> | <a href="${OpenSeaLink}/${curContract.options.address}/${id}" target="_blank">OpenSea</a> | Owner[${owner}]</p>`;
+      const item = `<p>NFT | <a href="${uri}" target="_blank">MetaData</a> | <a href="${OpenSeaLink}/${curContract.options.address}/${id}" target="_blank">OpenSea</a> | ID[${id}] Owner[${owner}]</p>`;
       $('#div_list_id').append(item);
     });
 
@@ -118,6 +127,7 @@ window.addEventListener('load', async () => {
     $('#div_list_owner #button_list').click(async function () {
       $('#div_list_owner p').remove();
       const owner = $('#div_list_owner #input_address').val();
+      if (!web3.utils.isAddress(owner)) return;
       const count = await curContract.methods.balanceOf(owner).call();
       for (var i = 0; i < count; i++) {
         const id = await curContract.methods.tokenOfOwnerByIndex(owner, i).call();
@@ -139,16 +149,15 @@ window.addEventListener('load', async () => {
         $('#div_list').append(item);
       }
     });
-
   });
 });
 
-/*
+const jsonex = `
 {
   "name": "Dave Starbelly",
   "description": "Friendly OpenSea Creature that enjoys long swims in the ocean.",
-  "image": "https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png",
-  "external_url": "https://openseacreatures.io/3",
+  "image": "https://ipfs.infura.io/ipfs/QmPSYjVa7FVvKmoonpM9NnnU95qsosoUSiKgqJUQkcpcU5",
+  "external_url": "https://join.neureal.net/nfts/3",
   "background_color": "FFFFFF",
   "attributes": [
     {
@@ -192,4 +201,4 @@ window.addEventListener('load', async () => {
     }
   ]
 }
-*/
+`;

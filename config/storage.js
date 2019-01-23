@@ -50,6 +50,7 @@ module.exports = {
       port: 5001,
       protocol: 'https',
       getUrl: 'https://ipfs.infura.io/ipfs/'
+      // TODO try setup ipns with Cloudflare DNS to make this work at 'https://join.neureal.net/'
     },
     dappConnection: [
       {

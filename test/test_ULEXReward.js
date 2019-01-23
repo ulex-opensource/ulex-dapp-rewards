@@ -69,9 +69,13 @@ describe('ULEXReward', function () {
   it('creation: test correct setting of state variables', async function () {
     let instance = await ULEXReward.deploy().send();
 
-    let OPENING_RATE = await instance.methods.OPENING_RATE().call();
-    console.log('OPENING_RATE: ', OPENING_RATE);
-    assert.strictEqual(parseInt(OPENING_RATE, 10), 6400);
+    // let OPENING_RATE = await instance.methods.OPENING_RATE().call();
+    // console.log('OPENING_RATE: ', OPENING_RATE);
+    // assert.strictEqual(parseInt(OPENING_RATE, 10), 6400);
+
+    let tokenId = await instance.methods.tokenId().call();
+    console.log('tokenId: ', tokenId);
+    assert.strictEqual(parseInt(tokenId, 10), 0);
   });
 
   it('creation: test correct setting of vanity information', async function () {

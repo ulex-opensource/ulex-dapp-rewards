@@ -9,31 +9,33 @@ import "openzeppelin-solidity/contracts/token/ERC721/ERC721MetadataMintable.sol"
  * @dev 
  */
 contract ULEXReward is ERC721Full, ERC721MetadataMintable {
-    // using SafeMath for uint256;
+    using SafeMath for uint256;
     // using Address for address;
 
     /*** TODO Testing (remove for production) ***/
 
-    uint256 public constant OPENING_RATE = 6400;
+    // uint256 public constant OPENING_RATE = 6400;
 
     /*** State Variables ***/
-    // TODO make sure I actually need this for OpenSea
-    function baseTokenURI() public pure returns (string) {
-        // TODO change to IPFS
-        return "https://opensea-creatures-api.herokuapp.com/api/creature/";
-    }
+    uint256 private tokenId = 0;
     
     /*** Events ***/
 
     /* Initializes contract */
     constructor() ERC721Full("ULEXReward", "ULEX") public { }
 
+    function mintWithTokenURI(address to, string tokenURI) external {
+        require(mintWithTokenURI(to, tokenId, tokenURI), "");
+        tokenId = tokenId.add(1);
+    }
     // To mint, call mintWithTokenURI(to, tokenId, tokenURI)
     // to read asset url, call tokenURI(tokenId)
     
+    // TODO override tokenURI(tokenId) to combine an ipfs host, stored seperately and changeable, with the unchangeable ipfs url, ie
+    // "https://ipfs.infura.io" + "/ipfs/QmcvYFgYKZa4pzSgTYktHKY8m6bSFsVBmYXPTWEMVv9Sne"
     // TODO make public facing dapp that lets people send ETH or DAI here, how to seperate public and admin?
-    // TODO look at Status plugin to see how to put public on Status on phone
-    // TODO add this in with reward amount levels that auto mint
+    // TODO look at Status plugin to see how to put public dapp on Status on phone
+    // TODO add this in with reward amount levels that auto mint for public dapp
     // /* (called whenever someone tries to send ether to this contract) */
     // function() external payable {
     //     require(msg.value != 0, ""); // Stop spamming, contract only calls, etc

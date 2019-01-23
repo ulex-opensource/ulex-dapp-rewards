@@ -11,46 +11,48 @@
       <button id="button_deploy">Deploy</button>
     </div>
 
-    <div id="div_info" class="w3-panel">
-      <h3>ULEXReward Contract Info</h3>
-      <p>Contract Address: <b id="text_address"></b></p>
-      <p>baseTokenURI: <b id="text_baseTokenURI"></b></p>
-      <!-- <p>Account[0]: 0x88A80C29c7C492b89b4c6D77Ba469604f3cBDC58<br>true | 10000000000000</p> -->
-    </div>
-    
-    <div id="div_mint" class="w3-panel">
-      <h3>Mint NFT</h3>
-      <input id="input_address" placeholder="reciepent address (address, 40 hex)" />
-      <input id="input_id" placeholder="NFT ID (12)" />
-      <textarea id="input_json" class="w3-input w3-border"></textarea>
-      <!-- <input id="input_name" placeholder="" />
-      <input id="input_description" placeholder="" />
-      <input id="input_image" placeholder="" />
-      <input id="input_external_url" placeholder="" />
-      <input id="input_background_color" placeholder="" />
-      <input id="input_attributes" placeholder="" /> -->
+    <span id="span_admin">
+      <div id="div_info" class="w3-panel">
+        <h3>ULEXReward Contract Info</h3>
+        <p>Contract Address: <b id="text_address"></b></p>
+        <!-- <p>baseTokenURI: <b id="text_baseTokenURI"></b></p> -->
+        <!-- <p>Account[0]: 0x88A80C29c7C492b89b4c6D77Ba469604f3cBDC58<br>true | 10000000000000</p> -->
+      </div>
+      
+      <div id="div_mint" class="w3-panel">
+        <h3>Mint NFT</h3>
+        <input id="input_address" placeholder="reciepent address (address, 40 hex)" />
+        <!-- <input id="input_id" placeholder="NFT ID (12)" /> -->
+        <textarea id="input_json" class="w3-input w3-border"></textarea>
+        <!-- <input id="input_name" placeholder="" />
+        <input id="input_description" placeholder="" />
+        <input id="input_image" placeholder="" />
+        <input id="input_external_url" placeholder="" />
+        <input id="input_background_color" placeholder="" />
+        <input id="input_attributes" placeholder="" /> -->
 
-      <button id="button_execute">Mint</button>
-      <div id="text_result"></div>
-    </div>
+        <button id="button_execute">Mint</button>
+        <!-- <div id="text_result"></div> -->
+      </div>
 
-    <div id="div_list_id" class="w3-panel">
-      <h3>Get an NFT by ID</h3>
-      <input id="input_id" placeholder="NFT ID (uint256, 32 bytes)" />
-      <button id="button_query">Query</button>
-    </div>
+      <div id="div_list_id" class="w3-panel">
+        <h3>Get an NFT by ID</h3>
+        <input id="input_id" placeholder="NFT ID (uint256, 32 bytes)" />
+        <button id="button_query">Query</button>
+      </div>
 
-    <div id="div_list_owner" class="w3-panel">
-      <h3>List an owners NFTs</h3>
-      <input id="input_address" placeholder="account address (address, 20 bytes)" />
-      <button id="button_list">List</button>
-    </div>
+      <div id="div_list_owner" class="w3-panel">
+        <h3>List an owners NFTs</h3>
+        <input id="input_address" placeholder="account address (address, 20 bytes)" />
+        <button id="button_list">List</button>
+      </div>
 
-    <div id="div_list" class="w3-panel">
-      <h3>List all minted NFTs</h3>
-      <button id="button_list">List</button>
-      <!-- <p>NFT | <a href="https://api/<token_id>" target="_blank">MetaData</a> | <a href="https://opensea/<your_contract_address>/<token_id>" target="_blank">OpenSea</a> | ID[123322134556464646464646454456777567676] Owner[0x88A80C29c7C492b89b4c6D77Ba469604f3cBDC58]</p> -->
-    </div>
+      <div id="div_list" class="w3-panel">
+        <h3>List all minted NFTs</h3>
+        <button id="button_list">List</button>
+        <!-- <p>NFT | <a href="https://api/<token_id>" target="_blank">MetaData</a> | <a href="https://opensea/<your_contract_address>/<token_id>" target="_blank">OpenSea</a> | ID[123322134556464646464646454456777567676] Owner[0x88A80C29c7C492b89b4c6D77Ba469604f3cBDC58]</p> -->
+      </div>
+    </span>
       
   </body>
 </html>
