@@ -20,7 +20,7 @@ Run all code tests
 `embark test`
 
 Deploy to public testnet (Rinkeby + IPFS)
-
-`embark upload testnet`
-
-(must be running `ipfs daemon` in seperate console)
+- must be running `ipfs daemon` in seperate console
+- `embark upload testnet`
+- `ipfs pin add -r <your-ipfs-hash>/`
+- TODO get embark to pin files on Infura
