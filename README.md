@@ -22,5 +22,5 @@ Run all code tests
 Deploy to public testnet (Rinkeby + IPFS)
 - must be running `ipfs daemon` in seperate console
 - `embark upload testnet`
-- `ipfs pin add -r <your-ipfs-hash>/`
-- TODO get embark to pin files on Infura
+- `ipfs pin add -r <your-site-ipfs-hash>/`
+- access at https://cloudflare-ipfs.com/ipfs/\<your-site-ipfs-hash>

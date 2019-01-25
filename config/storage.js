@@ -14,12 +14,12 @@ module.exports = {
   // default environment, merges with the settings in default
   // assumed to be the intended environment by `embark run`
   development: {
-    upload: {
-      provider: 'ipfs',
-      host: 'localhost',
-      port: 5001,
-      getUrl: 'http://localhost:8080/ipfs/'
-    },
+    // upload: {
+    //   provider: 'ipfs',
+    //   host: 'localhost',
+    //   port: 5001,
+    //   getUrl: 'http://localhost:8080/ipfs/'
+    // },
     dappConnection: [
       {
         provider: 'ipfs',
@@ -44,13 +44,13 @@ module.exports = {
   // merges with the settings in default
   // used with 'embark run testnet'
   testnet: {
-    upload: {
-      provider: 'ipfs',
-      host: 'ipfs.infura.io',
-      port: 5001,
-      protocol: 'https',
-      getUrl: 'https://ipfs.infura.io/ipfs/'
-    },
+    // upload: {
+    //   provider: 'ipfs',
+    //   host: 'ipfs.infura.io',
+    //   port: 5001,
+    //   protocol: 'https',
+    //   getUrl: 'https://ipfs.infura.io/ipfs/'
+    // },
     dappConnection: [
       {
         provider: 'ipfs',
@@ -65,14 +65,8 @@ module.exports = {
   // merges with the settings in default
   // used with 'embark run livenet'
   livenet: {
-    // TODO try setup ipns with Cloudflare DNS to make this work at 'https://domain.com/'
-    upload: {
-      provider: 'ipfs',
-      host: 'ipfs.infura.io',
-      port: 5001,
-      protocol: 'https',
-      getUrl: 'https://ipfs.infura.io/ipfs/'
-    },
+    // TODO setup Cloudflare DNS to make this work at 'https://domain.com/'
+    // https://developers.cloudflare.com/distributed-web/ipfs-gateway/connecting-website/
     dappConnection: [
       {
         provider: 'ipfs',

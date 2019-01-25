@@ -4,6 +4,7 @@ import EmbarkJS from 'Embark/EmbarkJS';
 import ULEXReward from 'Embark/contracts/ULEXReward';
 
 const OpenSeaLink = 'https://rinkeby.opensea.io/assets';
+const liveIpfsGateway = 'https://cloudflare-ipfs.com';
 
 // const uint256MAX = web3.utils.toBN('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
 // function inputToUint256 (inv) {
@@ -19,12 +20,9 @@ const OpenSeaLink = 'https://rinkeby.opensea.io/assets';
 async function pinIpfs (hash) {
   // TODO pin to local or personal storage as backup also
   const call = `https://ipfs.infura.io:5001/api/v0/pin/add?arg=/ipfs/${hash}&recursive=true`;
-  // console.log(call);
   const response = await fetch(call);
-  // console.log(response);
   if (!response.ok) throw new Error('pinIpfs HTTP error, status = ' + response.status);
   const json = await response.text();
-  // console.log('response.text:' + JSON.parse(json)['Pins'][0]);
   const hashRsp = JSON.parse(json)['Pins'];
   return (hashRsp) ? hashRsp[0] === hash : false;
 }
@@ -116,7 +114,7 @@ window.addEventListener('load', async () => {
       if (inputimageurl.prop('files').length > 0) {
         const hash = await EmbarkJS.Storage.uploadFile(inputimageurl);
         await pinIpfs(hash);
-        json['image_url'] = EmbarkJS.Storage.currentStorage._getUrl + hash;
+        json['image_url'] = liveIpfsGateway + '/ipfs/' + hash;
       }
       const inputname = $('#div_mint #input_name').val(); if (inputname !== '') json['name'] = inputname;
       const inputdescription = $('#div_mint #input_description').val(); if (inputdescription !== '') json['description'] = inputdescription;
@@ -125,8 +123,7 @@ window.addEventListener('load', async () => {
       // console.log(JSON.stringify(json));
       const hash = await EmbarkJS.Storage.saveText(JSON.stringify(json));
       await pinIpfs(hash);
-      // const uri = '/ipfs/' + hash; // 'fs:/ipfs/','/ipfs/','ipfs/' didn't work on OpenSea
-      const uri = EmbarkJS.Storage.currentStorage._getUrl + hash; // 'fs:/ipfs/','/ipfs/','ipfs/' didn't work on OpenSea
+      const uri = liveIpfsGateway + '/ipfs/' + hash; // 'fs:/ipfs/','/ipfs/','ipfs/' didn't work on OpenSea
       const receipt = await curContract.methods.mintWithTokenURI(owner, uri).send({ gas: 4000000 });
       const id = receipt.events['Transfer'].returnValues.tokenId;
       const item = `<p id="d">NFT | <a href="${uri}" target="_blank">MetaData</a> | <a href="${OpenSeaLink}/${curContract.options.address}/${id}" target="_blank">OpenSea</a> | ID[${id}]</p>`;
