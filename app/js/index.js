@@ -6,19 +6,7 @@ import ULEXReward from 'Embark/contracts/ULEXReward';
 const OpenSeaLink = 'https://rinkeby.opensea.io/assets';
 const liveIpfsGateway = 'https://cloudflare-ipfs.com';
 
-// const uint256MAX = web3.utils.toBN('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-// function inputToUint256 (inv) {
-//   const invt = +inv;
-//   if (isNaN(invt) || invt % 1 !== 0) inv = web3.utils.utf8ToHex(inv);
-//   inv = web3.utils.toBN(inv).abs();
-//   if (inv.gt(uint256MAX)) throw new Error('web3 uint256 overflow!');
-//   return inv;
-// }
-
-// TODO figure out better gasLimit and prices
-
 async function pinIpfs (hash) {
-  // TODO pin to local or personal storage as backup also
   const call = `https://ipfs.infura.io:5001/api/v0/pin/add?arg=/ipfs/${hash}&recursive=true`;
   const response = await fetch(call);
   if (!response.ok) throw new Error('pinIpfs HTTP error, status = ' + response.status);
@@ -46,11 +34,6 @@ window.addEventListener('load', async () => {
       console.log(err); return;
     }
     console.log('blockchain OK');
-    // // ** Check communication
-    // EmbarkJS.Messages.Providers.whisper.getWhisperVersion((err, _version) => {
-    //   if (err) { console.log(err); return; }
-    //   console.log('whisper OK');
-    // });
     // ** Check storage
     try {
       let result = await EmbarkJS.Storage.isAvailable();
@@ -68,8 +51,6 @@ window.addEventListener('load', async () => {
       curContract = new EmbarkJS.Blockchain.Contract({
         abi: ULEXReward.options.jsonInterface,
         address: contractAddr,
-        // from: contract.deploymentAccount || web3.eth.defaultAccount,
-        // gas: constants.tests.gasLimit,
         web3: web3
       });
       $('#span_admin').removeClass('w3-hide');
@@ -101,14 +82,11 @@ window.addEventListener('load', async () => {
       }
     });
 
-    // $('#div_mint #input_json').val(jsonex);
     // Mint NFT
-    // TODO ping this after change: https://rinkeby-api.opensea.io/api/v1/asset/<your_contract_address>/<token_id>/?force_update=true
     $('#div_mint #button_execute').click(async function () {
       $('#div_mint #span_content #d').remove();
       const owner = $('#div_mint #input_address').val();
       if (!web3.utils.isAddress(owner)) throw new Error('Address is not a correctly formated Ethereum address.');
-      // const id = inputToUint256($('#div_mint #input_id').val());
       let json = {};
       const inputimageurl = $('#div_mint #input_image_url');
       if (inputimageurl.prop('files').length > 0) {
@@ -120,10 +98,9 @@ window.addEventListener('load', async () => {
       const inputdescription = $('#div_mint #input_description').val(); if (inputdescription !== '') json['description'] = inputdescription;
       const inputbackgroundcolor = $('#div_mint #input_background_color').val(); if (inputbackgroundcolor !== '') json['background_color'] = inputbackgroundcolor;
       const inputtraits = JSON.parse($('#div_mint #input_traits').val()); if (inputtraits.length > 0) json['traits'] = inputtraits;
-      // console.log(JSON.stringify(json));
       const hash = await EmbarkJS.Storage.saveText(JSON.stringify(json));
       await pinIpfs(hash);
-      const uri = liveIpfsGateway + '/ipfs/' + hash; // 'fs:/ipfs/','/ipfs/','ipfs/' didn't work on OpenSea
+      const uri = liveIpfsGateway + '/ipfs/' + hash;
       const receipt = await curContract.methods.mintWithTokenURI(owner, uri).send({ gas: 4000000 });
       const id = receipt.events['Transfer'].returnValues.tokenId;
       const item = `<p id="d">NFT | <a href="${uri}" target="_blank">MetaData</a> | <a href="${OpenSeaLink}/${curContract.options.address}/${id}" target="_blank">OpenSea</a> | ID[${id}]</p>`;
@@ -133,7 +110,6 @@ window.addEventListener('load', async () => {
     // Get an NFT by ID
     $('#div_list_id #button_query').click(async function () {
       $('#div_list_id #span_content #d').remove();
-      // const id = inputToUint256($('#div_list_id #input_id').val());
       const id = web3.utils.toBN($('#div_list_id #input_id').val());
       const owner = await curContract.methods.ownerOf(id).call();
       const uri = await curContract.methods.tokenURI(id).call();
@@ -169,54 +145,3 @@ window.addEventListener('load', async () => {
     });
   });
 });
-
-// const jsonex = `
-// {
-//   "name": "Dave Starbelly",
-//   "description": "Friendly OpenSea Creature that enjoys long swims in the ocean.",
-//   "image_url": "https://ipfs.infura.io/ipfs/QmNNbkdPJPeScw3gZGnDQxsM7wDKzehZ6inMq2HSqm9SBk",
-//   "external_link": "https://join.neureal.net/nft/3",
-//   "background_color": "FFFFFF",
-//   "traits": [
-//     {
-//       "trait_type": "base",
-//       "value": "starfish"
-//     },
-//     {
-//       "trait_type": "eyes",
-//       "value": "big"
-//     },
-//     {
-//       "trait_type": "mouth",
-//       "value": "surprised"
-//     },
-//     {
-//       "trait_type": "level",
-//       "value": 5
-//     },
-//     {
-//       "trait_type": "stamina",
-//       "value": 1.4
-//     },
-//     {
-//       "trait_type": "personality",
-//       "value": "sad"
-//     },
-//     {
-//       "trait_type": "aqua_power",
-//       "display_type": "boost_number",
-//       "value": 40
-//     },
-//     {
-//       "trait_type": "stamina_increase",
-//       "display_type": "boost_percentage",
-//       "value": 10
-//     },
-//     {
-//       "trait_type": "generation",
-//       "display_type": "number",
-//       "value": 2
-//     }
-//   ]
-// }
-// `;

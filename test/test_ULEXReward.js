@@ -37,7 +37,7 @@ describe('ULEXReward', function () {
   // });
 
   it('should have account with balance', async function () {
-    let instance = await ULEXReward.deploy({ arguments: [accounts[1], accounts[2]] }).send();
+    // let instance = await ULEXReward.deploy({ arguments: [accounts[1], accounts[2]] }).send();
 
     let balance = await web3.eth.getBalance(accounts[0]);
     console.log('Account 0 balance: ', web3.utils.fromWei(balance));
@@ -69,10 +69,6 @@ describe('ULEXReward', function () {
   it('creation: test correct setting of state variables', async function () {
     let instance = await ULEXReward.deploy().send();
 
-    // let OPENING_RATE = await instance.methods.OPENING_RATE().call();
-    // console.log('OPENING_RATE: ', OPENING_RATE);
-    // assert.strictEqual(parseInt(OPENING_RATE, 10), 6400);
-
     let tokenId = await instance.methods.tokenId().call();
     console.log('tokenId: ', tokenId);
     assert.strictEqual(parseInt(tokenId, 10), 0);
@@ -82,9 +78,9 @@ describe('ULEXReward', function () {
     let instance = await ULEXReward.deploy().send();
 
     let name = await instance.methods.name().call();
-    assert.strictEqual(name, 'Bubblr Token');
+    assert.strictEqual(name, 'ULEX Rewards');
 
-    let symbol = await instance.methods.symbol().call();;
-    assert.strictEqual(symbol, 'BBLR');
+    let symbol = await instance.methods.symbol().call();
+    assert.strictEqual(symbol, 'ULEX');
   });
 });

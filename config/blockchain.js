@@ -78,17 +78,8 @@ module.exports = {
   testnet: {
     networkType: 'rinkeby',
     account: {
-      // address: '0xF0Aa93485C6373f1A9f121AD89b40592918fC48a' // When specified, uses that address instead of the default one for the network
+      // address: '' // When specified, uses that address instead of the default one for the network
     }
-    ,
-    // rpcCorsDomain: 'https://cloudflare-ipfs.com,https://ipfs.infura.io,http://localhost:8080,http://localhost:8000,embark',
-    // wsOrigins: 'https://cloudflare-ipfs.com,https://ipfs.infura.io,http://localhost:8080,http://localhost:8000,embark'
-    // syncMode: 'light',
-    // rpcCorsDomain: 'http://localhost:8000',
-    // wsOrigins: 'http://localhost:8000',
-    // account: {
-    //   password: 'config/livenet/password'
-    // }
   },
 
   // merges with the settings in default
