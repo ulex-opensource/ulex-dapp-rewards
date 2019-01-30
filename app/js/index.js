@@ -17,7 +17,7 @@ async function pinIpfs (hash) {
 
 window.addEventListener('load', async () => {
   if (!window.ethereum && !window.web3) {
-    console.log('Non-Ethereum browser detected. TODO redirect to static page to describe solution.'); return;
+    console.log('Non-Ethereum browser detected.'); return;
   }
   if (window.ethereum) {
     try {
@@ -71,8 +71,6 @@ window.addEventListener('load', async () => {
     // Contract Info
     $('#div_info #text_address').text(curContract.options.address);
     web3.eth.getAccounts().then(async function (accounts) {
-      $('#div_list_owner #input_address').val(accounts[1]);
-      $('#div_mint #input_address').val(accounts[1]);
       const divInfo = $('#div_info');
       for (var i = 0; i < 3 && i < accounts.length; i++) {
         const minter = await curContract.methods.isMinter(accounts[i]).call();
@@ -97,7 +95,7 @@ window.addEventListener('load', async () => {
       const inputname = $('#div_mint #input_name').val(); if (inputname !== '') json['name'] = inputname;
       const inputdescription = $('#div_mint #input_description').val(); if (inputdescription !== '') json['description'] = inputdescription;
       const inputbackgroundcolor = $('#div_mint #input_background_color').val(); if (inputbackgroundcolor !== '') json['background_color'] = inputbackgroundcolor;
-      const inputtraits = JSON.parse($('#div_mint #input_traits').val()); if (inputtraits.length > 0) json['traits'] = inputtraits;
+      const inputtraits = JSON.parse('[' + $('#div_mint #input_traits').val() + ']'); if (inputtraits.length > 0) json['traits'] = inputtraits;
       const hash = await EmbarkJS.Storage.saveText(JSON.stringify(json));
       await pinIpfs(hash);
       const uri = liveIpfsGateway + '/ipfs/' + hash;

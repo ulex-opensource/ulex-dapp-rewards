@@ -51,7 +51,7 @@ module.exports = {
       'ULEXReward': { deploy: false }
     },
     deployment: {
-      host: 'rinkeby.infura.io/f671218d5de443d797cc94560bde246b',
+      host: 'rinkeby.infura.io',
       port: false,
       protocol: 'https',
       type: 'rpc'
@@ -65,7 +65,7 @@ module.exports = {
       'ULEXReward': { deploy: false }
     },
     deployment: {
-      host: 'mainnet.infura.io/f671218d5de443d797cc94560bde246b',
+      host: 'mainnet.infura.io',
       port: false,
       protocol: 'https',
       type: 'rpc'
