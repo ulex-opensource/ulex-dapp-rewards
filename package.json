@@ -7,9 +7,9 @@
   },
   "author": "Wil Bown <wilbown@gmail.com>",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/proftomwbell/Ulex",
   "dependencies": {
-    "openzeppelin-solidity": "2.0.0",
+    "openzeppelin-solidity": "2.1.2",
     "jquery": "3.3.1"
   },
   "devDependencies": {}
