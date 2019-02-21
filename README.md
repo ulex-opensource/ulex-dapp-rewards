@@ -33,5 +33,5 @@ Deploy to public testnet (Rinkeby + IPFS)
 - must be running `ipfs daemon` in seperate console
 - `embark upload testnet`
 - `ipfs pin add -r <your-site-ipfs-hash>/`
-- access at https://cloudflare-ipfs.com/ipfs/&lt;your-site-ipfs-hash&gt;
+- access at `https://cloudflare-ipfs.com/ipfs/<your-site-ipfs-hash>`
 
