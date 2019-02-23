@@ -3,9 +3,14 @@ import $ from 'jquery';
 import EmbarkJS from 'Embark/EmbarkJS';
 import ULEXReward from 'Embark/contracts/ULEXReward';
 
-const OpenSeaLink = 'https://rinkeby.opensea.io/assets';
 const ipfsApiGateway = 'https://ipfs.infura.io:5001';
 const ipfsLiveGateway = 'https://cloudflare-ipfs.com';
+const OpenSeaLinkMainnet = 'https://opensea.io/assets';
+const OpenSeaLinkTestnet = 'https://rinkeby.opensea.io/assets';
+const NetDescMainnet = 'Main Ethereum Network';
+const NetDescTestnet = 'Rinkeby Test Network';
+const NetIdMainnet = 1;
+const NetIdTestnet = 4;
 
 function error (err) {
   $('#div_error').removeClass('w3-hide');
@@ -39,6 +44,15 @@ window.addEventListener('load', async () => {
 
         // ** Main
         var curContract = ULEXReward;
+        const netid = await web3.eth.net.getId();
+        var OpenSeaLink = ''; var NetDesc = 'Local Network';
+        const netIdError = 'Incompatable network for this dapp. Please connect to the ';
+        if (EmbarkJS.environment === 'livenet') {
+          OpenSeaLink = OpenSeaLinkMainnet; NetDesc = NetDescMainnet; if (netid !== NetIdMainnet) throw new Error(netIdError + NetDesc);
+        }
+        if (EmbarkJS.environment === 'testnet') {
+          OpenSeaLink = OpenSeaLinkTestnet; NetDesc = NetDescTestnet; if (netid !== NetIdTestnet) throw new Error(netIdError + NetDesc);
+        }
 
         // Get current contract address
         const urlParams = new URLSearchParams(window.location.search);
@@ -54,6 +68,7 @@ window.addEventListener('load', async () => {
         } else {
           // Deploy new contract
           $('#div_deploy').removeClass('w3-hide');
+          $('#div_deploy #text_network').text(NetDesc);
           $('#div_deploy #button_deploy').click(async function () {
             try {
               $('#div_error').addClass('w3-hide');
@@ -75,6 +90,7 @@ window.addEventListener('load', async () => {
         $('#div_info #text_name').text(name);
         const symbol = await curContract.methods.symbol().call();
         $('#div_info #text_symbol').text(symbol);
+        $('#div_info #text_network').text(NetDesc);
         $('#div_info #text_address').text(curContract.options.address);
         const accounts = await web3.eth.getAccounts();
         if (accounts.length < 1) throw new Error('No accounts available.');
